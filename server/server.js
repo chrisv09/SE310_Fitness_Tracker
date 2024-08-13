@@ -5,6 +5,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import workoutsRouter from './routes/workouts-routes.js';
+import exercisesRouter from './routes/exercises-routes.js';
+import routinesRouter from './routes/routines-routes.js';
 
 const PORT = 4001
 
@@ -27,8 +29,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // This puts data in a format that the server can understand. It takes a JSON object and returns a JSON string.
 app.use(bodyParser.json())
 
-// Implement workouts route
 app.use('/workouts', workoutsRouter)
+app.use('/exercises', exercisesRouter)
+app.use('/routines', routinesRouter)
+
+
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');

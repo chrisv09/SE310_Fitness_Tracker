@@ -1,5 +1,6 @@
 // This is the controller for the routines route. The controller is responsible for handling the request and response.
 import knex from './../db.js';
+
 // Retrieve all exercises
 const exercisesAll = (req, res) => {
     // Get all exercises from database

@@ -1,8 +1,11 @@
 import path from 'path';
 import knexLib from 'knex';
 
-// Get the location of database.sqlite file
-const dbPath = path.resolve('db/database.sqlite');
+// Determine the database file based on the environment
+const dbFileName = process.env.NODE_ENV === 'test' ? 'test_database.sqlite' : 'database.sqlite';
+
+// Get the location of the database file
+const dbPath = path.resolve(`db/database.sqlite`);
 
 // Create connection to SQLite database
 const knex = knexLib({
