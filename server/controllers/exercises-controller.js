@@ -1,14 +1,13 @@
 // This is the controller for the routines route. The controller is responsible for handling the request and response.
 import knex from './../db.js';
 
-// Retrieve all exercises
 const exercisesAll = (req, res) => {
-    // Get all exercises from database
+
     knex
-        .select('*') // select all exercises
-        .from('exercises') // from 'exercises_history' table
+        .select('*')
+        .from('exercises')
         .then(userData => {
-            // Send exercises extracted from database in response
+
             res.json(userData)
         })
         .catch(err => {
@@ -20,17 +19,31 @@ const exercisesAll = (req, res) => {
 
 // Retrieve all exercises in history
 const exercisesAllHistory = (req, res) => {
-    // Get all exercises from database
     knex
-        .select('*') // select all exercises
-        .from('exercises_history') // from 'exercises_history' table
+        .select('*')
+        .from('exercises_history')
         .orderBy('date', 'asc')
         .then(userData => {
-            // Send exercises extracted from database in response
             res.json(userData)
         })
         .catch(err => {
-            // Send a error message in response
+            res.json({ message: `There was an error retrieving exercises: ${err}` })
+        }
+        )
+}
+
+// Retrieve all exercises in one day
+const exercisesDay = (req, res) => {
+    const date = req.params.date
+
+    knex
+        .select('*')
+        .from('exercises_history')
+        .where('date', date)
+        .then(userData => {
+            res.json(userData)
+        })
+        .catch(err => {
             res.json({ message: `There was an error retrieving exercises: ${err}` })
         }
         )
@@ -65,5 +78,6 @@ const exerciseByNameDateAndSets = (req, res) => {
 export {
     exercisesAll,
     exercisesAllHistory,
+    exercisesDay,
     exerciseByNameDateAndSets
 }

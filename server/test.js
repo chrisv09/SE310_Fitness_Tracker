@@ -87,7 +87,7 @@ describe('Exercise API Endpoint Tests', () => {
         expect(res.body.length).to.equal(4); // Assuming 3 users from the seed data
     });
 
-    it('get exercises on one day', async () => {
+    it('should get exercises on one day', async () => {
         const res = await request(app)
             .get('/exercises/2021-01-01')
             .expect(200);
