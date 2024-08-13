@@ -6,7 +6,7 @@ const exercisesAll = (req, res) => {
     // Get all exercises from database
     knex
         .select('*') // select all exercises
-        .from('exercise_history') // from 'exercise_history' table
+        .from('exercises_history') // from 'exercises_history' table
         .then(userData => {
             // Send exercises extracted from database in response
             res.json(userData)
@@ -26,13 +26,13 @@ const exerciseByNameDateAndSets = (req, res) => {
     const sets = req.params.sets
 
     knex
-        .select('exercise_history.name', 'exercise_history.date', 'exercise_history.sets', 'exercise_history.reps', 'exercise_history.weight', 'exercise_history.score', 'exercises.muscle_group')
-        .from('exercise_history')
+        .select('exercises_history.name', 'exercises_history.date', 'exercises_history.sets', 'exercises_history.reps', 'exercises_history.weight', 'exercises_history.score', 'exercises.muscle_group')
+        .from('exercises_history')
         .where('name', name)
         .where('date', date)
         .where('sets', sets)
         // Join with exercises table to get muscle group
-        .join('exercises', 'exercise_history.name', 'exercises.name')
+        .join('exercises', 'exercises_history.name', 'exercises.name')
 
         .then(userData => {
             if (userData.length > 0) {

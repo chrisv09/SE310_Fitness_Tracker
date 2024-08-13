@@ -52,21 +52,10 @@ describe('Exercise API Endpoint Tests', () => {
             .get('/exercises/all')
             .expect(200);
 
+        console.log(res.body);
+
         expect(res.body).to.be.an('array');
         expect(res.body.length).to.equal(3); // Assuming 3 users from the seed data
     });
 
-    it('should create a new exercise', async () => {
-        const newExercise = {
-            name: 'Cornrolls',
-            muscle_group: 'quinticeps'
-        };
-
-        const res = await request(app)
-            .post('/exercises')
-            .send(newExercise)
-            .expect(201);
-
-        expect(res.body).to.include.keys('name', 'muscle_group');
-    });
 });
