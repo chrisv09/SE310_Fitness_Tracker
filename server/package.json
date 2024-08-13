@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "set NODE_ENV=test && mochanpx mocha test.js --exit",
-    "start": "set NODE_ENV=development && node server.js"
+    "test": "cross-env NODE_ENV=test npx mocha test.js --exit",
+    "start": "cross-env NODE_ENV=development node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "chai": "^5.1.1",
+    "cross-env": "^7.0.3",
     "mocha": "^10.7.3",
     "supertest": "^7.0.0"
   }

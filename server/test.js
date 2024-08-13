@@ -24,6 +24,7 @@ async function populateExercises() {
     try {
         await knex('exercises').del();
         await knex('exercises_history').del();
+        await knex('workouts').del();
         await knex('exercises').insert([
             { name: 'Thingimajigs', muscle_group: 'Biceps' },
             { name: 'Pullies', muscle_group: 'Triceps' },
@@ -50,15 +51,12 @@ describe('Exercise API Endpoint Tests', () => {
 
     before(async () => {
         await knex.migrate.latest();
-
         process.env.NODE_ENV = 'test';
-
     });
 
     beforeEach(async () => {
         backup = await backupData('exercises');
         await populateExercises()
-
     });
 
     afterEach(async () => {
