@@ -6,7 +6,7 @@ const exercisesAll = (req, res) => {
     // Get all exercises from database
     knex
         .select('*') // select all exercises
-        .from('exercises_history') // from 'exercises_history' table
+        .from('exercises') // from 'exercises_history' table
         .then(userData => {
             // Send exercises extracted from database in response
             res.json(userData)

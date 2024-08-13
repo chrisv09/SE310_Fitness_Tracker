@@ -20,31 +20,53 @@ async function restoreData(tableName, data) {
     }
 }
 
+async function populateExercises() {
+    try {
+        await knex('exercises').del();
+        await knex('exercises_history').del();
+        await knex('exercises').insert([
+            { name: 'Thingimajigs', muscle_group: 'Biceps' },
+            { name: 'Pullies', muscle_group: 'Triceps' },
+            { name: 'Pushies', muscle_group: 'Quadriceps' },
+            { name: 'Workies', muscle_group: 'Quinticeps' }
+        ]);
+        await knex('workouts').insert([
+            { date: '19-08-2021' }]);
+        await knex('exercises_history').insert([
+            { name: 'Thingimajigs', date: '2021-01-01', set: 3, weight: 20 },
+            { name: 'Pullies', date: '2021-01-01', set: 3, weight: 20, rep: 10 },
+        ])
+        console.log('Data inserted successfully');
+    } catch (error) {
+        console.error('Error inserting data:', error);
+    } finally {
+        await knex.destroy();
+    }
+}
+
+
 describe('Exercise API Endpoint Tests', () => {
-    let exercisesBackup; // Variable to hold the backup data
+    let backup;
 
     before(async () => {
         await knex.migrate.latest();
 
-        // Backup existing data
-        exercisesBackup = await backupData('exercises');
+        process.env.NODE_ENV = 'test';
+
     });
 
     beforeEach(async () => {
-        await knex.seed.run(); // Populate with seed data before each test
+        backup = await backupData('exercises');
+        await populateExercises()
+
     });
 
     afterEach(async () => {
-        // Optionally clean up after each test if needed
+
     });
 
     after(async () => {
-        // Restore original data
-        await restoreData('exercises', exercisesBackup);
 
-        // Rollback migrations and close the connection
-        await knex.migrate.rollback();
-        await knex.destroy();
     });
 
     it('should return all exercises', async () => {
@@ -52,10 +74,11 @@ describe('Exercise API Endpoint Tests', () => {
             .get('/exercises/all')
             .expect(200);
 
-        console.log(res.body);
+        // print name of database file
+        console.log('Response body:', res.body);
 
         expect(res.body).to.be.an('array');
-        expect(res.body.length).to.equal(3); // Assuming 3 users from the seed data
+        expect(res.body.length).to.equal(4); // Assuming 3 users from the seed data
     });
 
 });

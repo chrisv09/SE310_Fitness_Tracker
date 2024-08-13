@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "npx mocha test.js --exit"
+    "test": "set NODE_ENV=test && mochanpx mocha test.js --exit",
+    "start": "set NODE_ENV=development && node server.js"
   },
   "author": "",
   "license": "ISC",

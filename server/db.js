@@ -1,20 +1,11 @@
-import path from 'path';
-import knexLib from 'knex';
+import knexModule from 'knex';
+import knexfile from './knexfile.cjs';
+// Determine the environment and select the appropriate configuration
+const environment = process.env.NODE_ENV || 'development';
+const config = knexfile[environment];
 
-// Determine the database file based on the environment
-const dbFileName = process.env.NODE_ENV === 'test' ? 'test_database.sqlite' : 'database.sqlite';
-
-// Get the location of the database file
-const dbPath = path.resolve(`db/database.sqlite`);
-
-// Create connection to SQLite database
-const knex = knexLib({
-  client: 'sqlite3',
-  connection: {
-    filename: dbPath,
-  },
-  useNullAsDefault: true
-})
+// Create connection to the database
+const knex = knexModule(config);
 
 // Create a table in the database called "exercises"
 knex.schema
