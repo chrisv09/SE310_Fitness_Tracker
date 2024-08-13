@@ -1,8 +1,8 @@
 import knexModule from 'knex';
-import knexfile from './knexfile.cjs'; // Assuming knexfile.js is using ES module syntax
+import knexfile from '../knexfile.cjs'; // Assuming knexfile.js is using ES module syntax
 import request from 'supertest';
 import { expect } from 'chai';
-import app from './server.js'; // Adjust the path as needed
+import app from '../server.js'; // Adjust the path as needed
 
 const knex = knexModule(knexfile.test);
 
