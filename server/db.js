@@ -1,11 +1,14 @@
 import knexModule from 'knex';
 import knexfile from './knexfile.cjs';
-// Determine the environment and select the appropriate configuration
-const environment = process.env.NODE_ENV || 'development';
-const config = knexfile[environment];
 
+// Determine the environment and select the appropriate configuration
+const environment = process.env.NODE_ENV === 'development' ? 'development' : 'test';
+
+const config = knexfile[environment];
 // Create connection to the database
 const knex = knexModule(config);
+
+console.log('Database file:', config.connection.filename);
 
 // Create a table in the database called "exercises"
 knex.schema

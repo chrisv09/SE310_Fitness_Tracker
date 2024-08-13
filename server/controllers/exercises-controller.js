@@ -18,6 +18,24 @@ const exercisesAll = (req, res) => {
         )
 }
 
+// Retrieve all exercises in history
+const exercisesAllHistory = (req, res) => {
+    // Get all exercises from database
+    knex
+        .select('*') // select all exercises
+        .from('exercises_history') // from 'exercises_history' table
+        .orderBy('date', 'asc')
+        .then(userData => {
+            // Send exercises extracted from database in response
+            res.json(userData)
+        })
+        .catch(err => {
+            // Send a error message in response
+            res.json({ message: `There was an error retrieving exercises: ${err}` })
+        }
+        )
+}
+
 // Retrieve one exercise by name, date and sets
 const exerciseByNameDateAndSets = (req, res) => {
 

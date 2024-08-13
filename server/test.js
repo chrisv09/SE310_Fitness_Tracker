@@ -72,11 +72,16 @@ describe('Exercise API Endpoint Tests', () => {
             .get('/exercises/all')
             .expect(200);
 
-        // print name of database file
-        console.log('Response body:', res.body);
-
         expect(res.body).to.be.an('array');
         expect(res.body.length).to.equal(4); // Assuming 3 users from the seed data
     });
 
+    it('should return all exercises in history', async () => {
+        const res = await request(app)
+            .get('/exercises/history')
+            .expect(200);
+
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.equal(2); // Assuming 3 users from the seed data
+    });
 });
