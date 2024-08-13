@@ -51,12 +51,11 @@ describe('Exercise API Endpoint Tests', () => {
 
     before(async () => {
         await knex.migrate.latest();
-        process.env.NODE_ENV = 'test';
+        await populateExercises();
     });
 
     beforeEach(async () => {
-        backup = await backupData('exercises');
-        await populateExercises()
+
     });
 
     afterEach(async () => {
@@ -64,7 +63,19 @@ describe('Exercise API Endpoint Tests', () => {
     });
 
     after(async () => {
+        await knex.destroy();
+    });
 
+    it('should return one exercise by name, date, and sets', async () => {
+        const res = await request(app)
+            .get('/exercises/Pullies/2021-01-01/3')
+            .expect(200);
+
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.equal(1);
+        expect(res.body[0].name).to.equal('Pullies');
+        expect(res.body[0].date).to.equal('2021-01-01');
+        expect(res.body[0].sets).to.equal(3);
     });
 
     it('should return all exercises', async () => {
@@ -74,6 +85,15 @@ describe('Exercise API Endpoint Tests', () => {
 
         expect(res.body).to.be.an('array');
         expect(res.body.length).to.equal(4); // Assuming 3 users from the seed data
+    });
+
+    it('get exercises on one day', async () => {
+        const res = await request(app)
+            .get('/exercises/2021-01-01')
+            .expect(200);
+
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.equal(2);
     });
 
     it('should return all exercises in history', async () => {

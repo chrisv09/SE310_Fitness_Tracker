@@ -39,17 +39,12 @@ const exercisesAllHistory = (req, res) => {
 // Retrieve one exercise by name, date and sets
 const exerciseByNameDateAndSets = (req, res) => {
 
-    const name = req.params.name
-    const date = req.params.date
-    const sets = req.params.sets
+    const { name, date, sets } = req.params
 
     knex
-        .select('exercises_history.name', 'exercises_history.date', 'exercises_history.sets', 'exercises_history.reps', 'exercises_history.weight', 'exercises_history.score', 'exercises.muscle_group')
+        .select('exercises_history.name', 'date', 'sets', 'reps', 'weight', 'score', 'muscle_group')
         .from('exercises_history')
-        .where('name', name)
-        .where('date', date)
-        .where('sets', sets)
-        // Join with exercises table to get muscle group
+        .where({ name, date, sets })
         .join('exercises', 'exercises_history.name', 'exercises.name')
 
         .then(userData => {
@@ -69,5 +64,6 @@ const exerciseByNameDateAndSets = (req, res) => {
 
 export {
     exercisesAll,
+    exercisesAllHistory,
     exerciseByNameDateAndSets
 }

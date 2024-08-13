@@ -27,7 +27,11 @@ const config = {
         },
         seeds: {
             directory: path.join(__dirname, 'seeds')
-        }
+        },
+        pool: {
+            min: 2,
+            max: 10 // Increase this number if needed
+        },
     },
 
     production: {
