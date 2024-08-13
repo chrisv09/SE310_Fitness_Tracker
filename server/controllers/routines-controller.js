@@ -1,8 +1,8 @@
 // This is the controller for the routines route. The controller is responsible for handling the request and response.
 const knex = require('./../db')
 
-// Retrieve all workouts
-const workoutsAll = (req, res) => {
+// Retrieve all routines
+const routinesAll = (req, res) => {
     // Get all routines from database
     knex
         .select('*') // select all routines
@@ -47,6 +47,6 @@ const routineByNameAndDate = (req, res) => {
 }
 
 module.exports = {
-    workoutsAll,
+    routinesAll,
     routineByNameAndDate
 };

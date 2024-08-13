@@ -1,5 +1,5 @@
 import knexModule from 'knex';
-import knexfile from './knexfile.js'; // Assuming knexfile.js is using ES module syntax
+import knexfile from './knexfile.cjs'; // Assuming knexfile.js is using ES module syntax
 import request from 'supertest';
 import { expect } from 'chai';
 import app from './server.js'; // Adjust the path as needed
@@ -49,7 +49,7 @@ describe('Exercise API Endpoint Tests', () => {
 
     it('should return all exercises', async () => {
         const res = await request(app)
-            .get('/users')
+            .get('/exercises/all')
             .expect(200);
 
         expect(res.body).to.be.an('array');

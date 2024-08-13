@@ -1,11 +1,11 @@
-// Import path module
-const path = require('path')
+import path from 'path';
+import knexLib from 'knex';
 
 // Get the location of database.sqlite file
-const dbPath = path.resolve(__dirname, 'db/database.sqlite')
+const dbPath = path.resolve('db/database.sqlite');
 
 // Create connection to SQLite database
-const knex = require('knex')({
+const knex = knexLib({
   client: 'sqlite3',
   connection: {
     filename: dbPath,
@@ -140,12 +140,9 @@ knex.schema
     console.error(`There was an error setting up the database: ${error}`)
   })
 
-
-
 // Log all data in "exercises_history" table (for debugging)
 knex.select('*').from('exercises_history')
   .then(data => console.log('data:', data))
   .catch(err => console.log(err))
 
-// Export the database
-module.exports = knex
+export default knex;

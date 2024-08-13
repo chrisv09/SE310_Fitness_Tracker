@@ -1,5 +1,4 @@
 // knexfile.js
-
 const path = require('path');
 
 const config = {
@@ -46,4 +45,4 @@ const config = {
     }
 };
 
-export default config;
+module.exports = config;
