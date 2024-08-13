@@ -1,15 +1,13 @@
 // The routes for exercises
-
-const express = require('express')
-
-const exercisesController = require('../controllers/exercises-controller')
+import express from 'express';
+import { exercisesAll, exerciseByName } from '../controllers/exercises-controller.js';
 
 const router = express.Router()
 
 // Get all exercises
-router.get('/all', exercisesController.exercisesAll)
+router.get('/all', exercisesAll)
 
 // Get exercise by name
-router.get('/:name', exercisesController.exerciseByName)
+router.get('/:name', exerciseByName)
 
-module.exports = router;
+export default router;

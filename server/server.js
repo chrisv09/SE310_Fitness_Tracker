@@ -1,10 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser')
-const compression = require('compression')
-const cors = require('cors')
-const helmet = require('helmet')
+import express from 'express';
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import cors from 'cors';
+import helmet from 'helmet';
 
-const workoutsRouter = require('./routes/workouts-routes')
+import workoutsRouter from './routes/workouts-routes.js';
 
 const PORT = 4001
 
@@ -37,3 +37,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, function () {
     console.log(`Server is running on: ${PORT}`)
 })
+
+export default app;

@@ -1,8 +1,6 @@
 // The routes for the routines
-
-const express = require('express');
-
-const routinesController = require('../controllers/routines-controller');
+import express from 'express';
+import * as routinesController from '../controllers/routines-controller.js';
 
 const router = express.Router();
 
@@ -12,4 +10,4 @@ router.get('/', routinesController.getRoutines);
 // Get a routine by name and date
 router.get('/:name/:date', routinesController.getRoutine);
 
-module.exports = router;
+export default router;
