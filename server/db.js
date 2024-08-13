@@ -35,7 +35,7 @@ knex.schema
   })
   .then(() => {
     // Log success message
-    console.log('done')
+    console.log('created exercises table')
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`)
@@ -63,7 +63,7 @@ knex.schema
   })
   .then(() => {
     // Log success message
-    console.log('done')
+    console.log('created workouts table')
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`)
@@ -127,15 +127,10 @@ knex.schema
   })
   .then(() => {
     // Log success message
-    console.log('done')
+    console.log('created exercises_history table')
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`)
   })
-
-// Log all data in "exercises_history" table (for debugging)
-knex.select('*').from('exercises_history')
-  .then(data => console.log('data:', data))
-  .catch(err => console.log(err))
 
 export default knex;

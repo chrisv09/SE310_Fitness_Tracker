@@ -105,3 +105,14 @@ describe('Exercise API Endpoint Tests', () => {
         expect(res.body.length).to.equal(2); // Assuming 3 users from the seed data
     });
 });
+
+describe('Workout API Endpoint Tests', () => {
+    it('should return all workouts', async () => {
+        const res = await request(app)
+            .get('/workouts/all')
+            .expect(200);
+
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.equal(1);
+    });
+});
