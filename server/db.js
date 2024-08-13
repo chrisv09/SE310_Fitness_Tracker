@@ -5,14 +5,12 @@ import knexfile from './knexfile.cjs';
 const environment = process.env.NODE_ENV === 'development' ? 'development' : 'test';
 
 const config = knexfile[environment];
-// Create connection to the database
 const knex = knexModule(config);
 
 console.log('Database file:', config.connection.filename);
 
 // Create a table in the database called "exercises"
 knex.schema
-  // If there is already a table, work with it
   .hasTable('exercises')
   .then((exists) => {
     if (!exists) {
@@ -43,7 +41,6 @@ knex.schema
 
 // Create a table in the database called "workouts"
 knex.schema
-  // If there is already a table, work with it
   .hasTable('workouts')
   .then((exists) => {
     if (!exists) {
@@ -71,12 +68,9 @@ knex.schema
 
 // Create a table in the database called "routines"
 knex.schema
-  // If there is already a table, work with it
   .hasTable('routines')
   .then((exists) => {
     if (!exists) {
-      // If no "routines" table exists
-      // create new, with "name" and "date" as columns and primary key. this is because we will be storing the exercises in a separate table
       return knex.schema.createTable('routines', (table) => {
         table.string('name').notNullable()
         table.date('date').notNullable()
@@ -97,7 +91,6 @@ knex.schema
 
 // Create a table in the database called "exercises_history"
 knex.schema
-  // If there is already a table, work with it
   .hasTable('exercises_history')
   .then((exists) => {
     if (!exists) {
