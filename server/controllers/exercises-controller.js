@@ -1,8 +1,8 @@
 // This is the controller for the routines route. The controller is responsible for handling the request and response.
 import knex from './../db.js';
 
+// Retrieve all exercises
 const exercisesAll = (req, res) => {
-
     knex
         .select('*')
         .from('exercises')
@@ -77,9 +77,66 @@ const exerciseByNameDateAndSets = (req, res) => {
 
 }
 
+//creates a new exercise
+const createExercise = (req, res) => {
+    const {name,muscleGroup} = req.params
+
+
+    knex('exercises')
+        .insert({
+            'name': name,
+            'muscle_group': muscleGroup
+        })
+        //if error occurs then drops insert apon error
+        .onConflict('name').ignore()
+        .returning('name')
+        .then(name => {
+            if (name.length > 0) {
+                res.status(201).json({ message: 'Exercise added successfully'});
+            } else {
+                res.status(200).json({ message: 'Exercise already exists, no new entry created' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: `An error occurred while creating a new exercises`, error: error.message });
+        });
+}
+
+//logs new exercise Set
+const logExerciseSet = (req, res) => {
+    const {name,date,set,weight,rep,score}= req.params
+
+
+    knex('exercises_history')
+        .insert({
+            'name': name,
+            'date': date,
+            'set': set,
+            'weight': weight,
+            'rep':rep,
+            'score':score
+        })
+        //if conflict occurs then drops current insert apon error
+        .onConflict(['name','date','set']).ignore()
+        .returning('name')  
+        .then(name => {
+            if (name.length > 0) {
+                res.status(201).json({ message: 'Exercise set added successfully'});
+            } else {
+                res.status(200).json({ message: 'Conflicting exercise name, date of completion, or set number. no new entry created' });
+            }
+        })
+        .catch(error => {
+            // Error: Something went wrong
+            res.status(500).json({ message: `An error occurred while creating a new exercises`, error: error.message });
+        });
+}
+
 export {
     exercisesAll,
     exercisesAllHistory,
     exercisesDay,
     exerciseByNameDateAndSets
+    createExercise,
+  logExerciseSet
 }

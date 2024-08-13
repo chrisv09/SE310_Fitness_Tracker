@@ -8,6 +8,7 @@ import workoutsRouter from './routes/workouts-routes.js';
 import exercisesRouter from './routes/exercises-routes.js';
 import routinesRouter from './routes/routines-routes.js';
 
+
 const PORT = 4001
 
 const app = express()
@@ -32,6 +33,8 @@ app.use(bodyParser.json())
 app.use('/workouts', workoutsRouter)
 app.use('/exercises', exercisesRouter)
 app.use('/routines', routinesRouter)
+
+app.use('/exercises', exercisesRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');

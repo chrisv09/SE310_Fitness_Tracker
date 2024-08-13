@@ -7,7 +7,6 @@ const environment = process.env.NODE_ENV === 'development' ? 'development' : 'te
 const config = knexfile[environment];
 const knex = knexModule(config);
 
-console.log('Database file:', config.connection.filename);
 
 // Create a table in the database called "exercises"
 knex.schema

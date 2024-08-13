@@ -46,7 +46,33 @@ const routineByNameAndDate = (req, res) => {
         )
 }
 
+//creates a new routine
+const createRoutine = (req, res) => {
+    const {name,date} = req.params
+
+
+    knex('routines')
+        .insert({
+            'name': name,
+            'date': date
+        })
+        //if error occurs then drops insert apon error
+        .onConflict('name').ignore()
+        .returning('name')
+        .then(name => {
+            if (name.length > 0) {
+                res.status(201).json({ message: 'routine added successfully'});
+            } else {
+                res.status(200).json({ message: 'routine already exists, no new entry created' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: `An error occurred while creating a new exercises`, error: error.message });
+        });
+}
+
 export {
     routinesAll,
-    routineByNameAndDate
+    routineByNameAndDate,
+    createRoutine
 }

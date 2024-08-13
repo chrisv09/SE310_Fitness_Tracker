@@ -37,7 +37,32 @@ const workoutByDate = (req, res) => {
     })
 }
 
+//creates a new workout
+const createWorkout = (req, res) => {
+    const {date} = req.params
+
+
+    knex('workouts')
+        .insert({
+            'date': date
+        })
+        //if error occurs then drops insert apon error
+        .onConflict('date').ignore()
+        .returning('date')
+        .then(date => {
+            if (date.length > 0) {
+                res.status(201).json({ message: 'workout added successfully'});
+            } else {
+                res.status(200).json({ message: 'workout already exists, no new entry created' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: `An error occurred while creating a new exercises`, error: error.message });
+        });
+}
+
 export {
   workoutsAll,
-  workoutByDate
+  workoutByDate,
+  createWorkout
 }
