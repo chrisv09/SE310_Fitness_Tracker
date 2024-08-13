@@ -86,6 +86,12 @@ knex.schema
           console.error(`There was an error creating table: ${error}`)
         })
     }
+  }).then(() => {
+    // Log success message
+    console.log('created routines table')
+  })
+  .catch((error) => {
+    console.error(`There was an error setting up the database: ${error}`)
   })
 
 
