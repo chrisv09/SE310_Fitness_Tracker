@@ -55,10 +55,12 @@ const exerciseByNameDateAndSets = (req, res) => {
     const { name, date, sets } = req.params
 
     knex
-        .select('exercises_history.name', 'date', 'sets', 'reps', 'weight', 'score', 'muscle_group')
+        .select('name', 'date', 'sets', 'reps', 'weight', 'score')
         .from('exercises_history')
-        .where({ name, date, sets })
-        .join('exercises', 'exercises_history.name', 'exercises.name')
+        .where('name', name)
+        .where('date', date)
+        .where('sets', sets)
+
 
         .then(userData => {
             if (userData.length > 0) {

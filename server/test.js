@@ -34,8 +34,8 @@ async function populateExercises() {
         await knex('workouts').insert([
             { date: '19-08-2021' }]);
         await knex('exercises_history').insert([
-            { name: 'Thingimajigs', date: '2021-01-01', set: 3, weight: 20, rep: 10 },
-            { name: 'Pullies', date: '2021-01-01', set: 3, weight: 20, rep: 10 },
+            { name: 'Thingimajigs', date: '2021-01-01', sets: 3, weight: 20, reps: 10 },
+            { name: 'Pullies', date: '2021-01-01', sets: 3, weight: 20, reps: 10 },
         ])
         console.log('Data inserted successfully');
     } catch (error) {

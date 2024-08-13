@@ -101,20 +101,16 @@ knex.schema
   .hasTable('exercises_history')
   .then((exists) => {
     if (!exists) {
-      // If no "exercises_history" table exists
-      // create new, with "weight", "set", "rep",
-      // and use "id" as a primary identification
-      // and increment "id" with every new record (book)
       return knex.schema.createTable('exercises_history', (table) => {
         table.string('name').notNullable();
         table.date('date').notNullable();
-        table.integer('set').notNullable();
+        table.integer('sets').notNullable();
         table.float('weight');
-        table.integer('rep');
+        table.integer('reps');
         table.integer('score');
 
         // Define composite primary key
-        table.primary(['name', 'date', 'set']);
+        table.primary(['name', 'date', 'sets']);
 
         // Define foreign keys
         table.foreign('name').references('exercises.name');
