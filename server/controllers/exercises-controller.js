@@ -79,7 +79,7 @@ const exerciseByNameDateAndSets = (req, res) => {
 
 //creates a new exercise
 const createExercise = (req, res) => {
-    const {name,muscleGroup} = req.params
+    const { name, muscleGroup } = req.params
 
 
     knex('exercises')
@@ -92,7 +92,7 @@ const createExercise = (req, res) => {
         .returning('name')
         .then(name => {
             if (name.length > 0) {
-                res.status(201).json({ message: 'Exercise added successfully'});
+                res.status(201).json({ message: 'Exercise added successfully' });
             } else {
                 res.status(200).json({ message: 'Exercise already exists, no new entry created' });
             }
@@ -104,7 +104,7 @@ const createExercise = (req, res) => {
 
 //logs new exercise Set
 const logExerciseSet = (req, res) => {
-    const {name,date,set,weight,rep,score}= req.params
+    const { name, date, set, weight, rep, score } = req.params
 
 
     knex('exercises_history')
@@ -113,15 +113,15 @@ const logExerciseSet = (req, res) => {
             'date': date,
             'set': set,
             'weight': weight,
-            'rep':rep,
-            'score':score
+            'rep': rep,
+            'score': score
         })
         //if conflict occurs then drops current insert apon error
-        .onConflict(['name','date','set']).ignore()
-        .returning('name')  
+        .onConflict(['name', 'date', 'set']).ignore()
+        .returning('name')
         .then(name => {
             if (name.length > 0) {
-                res.status(201).json({ message: 'Exercise set added successfully'});
+                res.status(201).json({ message: 'Exercise set added successfully' });
             } else {
                 res.status(200).json({ message: 'Conflicting exercise name, date of completion, or set number. no new entry created' });
             }
@@ -136,7 +136,7 @@ export {
     exercisesAll,
     exercisesAllHistory,
     exercisesDay,
-    exerciseByNameDateAndSets
+    exerciseByNameDateAndSets,
     createExercise,
-  logExerciseSet
+    logExerciseSet
 }
