@@ -17,9 +17,9 @@ router.get('/:date', exercisesDay)
 router.get('/:name/:date/:sets', exerciseByNameDateAndSets)
 
 //Create a new exercise
-router.post('/create', exercisesController.createExercise)
+router.post('/create', createExercise)
 
 //Log a set
-router.post('/Log/:name/:date/:set/:weight/:rep/:score', exercisesController.logExerciseSet)
+router.post('/Log/:name/:date/:set/:weight/:rep/:score', logExerciseSet)
 
 export default router;
