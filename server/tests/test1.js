@@ -104,6 +104,14 @@ describe('Exercise API Endpoint Tests', () => {
         expect(res.body).to.be.an('array');
         expect(res.body.length).to.equal(2); // Assuming 3 users from the seed data
     });
+
+    it('should delete an exercise', async () => {
+        const res = await request(app)
+            .delete('/exercises/delete/Thingimajigs')
+            .expect(200);
+
+        expect(res.body.message).to.equal('Exercise deleted successfully');
+    });
 });
 
 describe('Workout API Endpoint Tests', () => {
