@@ -88,7 +88,7 @@ const getScoreByDate = (req, res) => {
         // Join with exercises table to get muscle group
         .join('exercises', 'exercises_history.name', 'exercises.name')
         .where('exercises_history.date', date)
-        .groupBy('exercises_history.date', 'exercises.muscle_group')
+    groupBy('exercises.muscle_group')
 
         .then(userData => {
             if (userData.length > 0) {

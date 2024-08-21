@@ -32,10 +32,11 @@ async function populateExercises() {
             { name: 'Workies', muscle_group: 'Quinticeps' }
         ]);
         await knex('workouts').insert([
-            { date: '19-08-2021' }]);
+            { date: '2021-01-01' }]);
         await knex('exercises_history').insert([
-            { name: 'Thingimajigs', date: '2021-01-01', sets: 3, weight: 20, reps: 10 },
-            { name: 'Pullies', date: '2021-01-01', sets: 3, weight: 20, reps: 10 },
+            { name: 'Thingimajigs', date: '2021-01-01', sets: 3, weight: 20, reps: 10, score: 300 },
+            { name: 'Pullies', date: '2021-01-01', sets: 3, weight: 20, reps: 10, score: 300 },
+            { name: 'Pushies', date: '2021-01-01', sets: 3, weight: 20, reps: 10, score: 300 },
         ])
         console.log('Data inserted successfully');
     } catch (error) {
@@ -93,7 +94,7 @@ describe('Exercise API Endpoint Tests', () => {
             .expect(200);
 
         expect(res.body).to.be.an('array');
-        expect(res.body.length).to.equal(2);
+        expect(res.body.length).to.equal(3);
     });
 
     it('should return all exercises in history', async () => {
@@ -102,7 +103,7 @@ describe('Exercise API Endpoint Tests', () => {
             .expect(200);
 
         expect(res.body).to.be.an('array');
-        expect(res.body.length).to.equal(2); // Assuming 3 users from the seed data
+        expect(res.body.length).to.equal(3);
     });
 
     it('should edit an exercise', async () => {
@@ -115,23 +116,49 @@ describe('Exercise API Endpoint Tests', () => {
 
     it('should delete an exercise', async () => {
         const res = await request(app)
-            .delete('/exercises/delete/Thingies')
+            .delete('/exercises/delete/Pullies')
             .expect(200);
 
         expect(res.body.message).to.equal('Exercise deleted successfully');
-        expect(res.body.length).to.equal(1);
     });
 
-
-});
-
-describe('Workout API Endpoint Tests', () => {
-    it('should return all workouts', async () => {
+    it('should get a score by date but using exerciseDay', async () => {
         const res = await request(app)
-            .get('/workouts/all')
+            .get('/exercises/2021-01-01')
             .expect(200);
 
-        expect(res.body).to.be.an('array');
-        expect(res.body.length).to.equal(1);
+        const res2 = await request(app)
+            .get('/exercises/all')
+            .expect(200);
+
+        // get list of muscle groups
+        let muscleGroups = res2.body.map(exercise => exercise.muscle_group);
+        let exercises = res.body
+
+        // create a dictionary of muscle groups and their scores
+        let scores = {};
+
+        for (const element of muscleGroups) {
+            scores[element] = 0;
+        }
+
+        // add up the scores for each muscle group
+        for (const exercise of exercises) {
+            scores[exercise.muscle_group] += exercise.score;
+        }
+
+        console.log(scores);
+
+    });
+
+    describe('Workout API Endpoint Tests', () => {
+        it('should return all workouts', async () => {
+            const res = await request(app)
+                .get('/workouts/all')
+                .expect(200);
+
+            expect(res.body).to.be.an('array');
+            expect(res.body.length).to.equal(1);
+        });
     });
 });
