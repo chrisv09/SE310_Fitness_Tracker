@@ -47,7 +47,6 @@ async function populateExercises() {
 
 
 describe('Exercise API Endpoint Tests', () => {
-    let backup;
 
     before(async () => {
         await knex.migrate.latest();
