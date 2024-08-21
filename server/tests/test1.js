@@ -105,13 +105,24 @@ describe('Exercise API Endpoint Tests', () => {
         expect(res.body.length).to.equal(2); // Assuming 3 users from the seed data
     });
 
+    it('should edit an exercise', async () => {
+        const res = await request(app)
+            .put('/exercises/edit/Thingimajigs/Thingies/Biceps')
+            .expect(200);
+
+        expect(res.body.message).to.equal('Exercise was edited successfully');
+    });
+
     it('should delete an exercise', async () => {
         const res = await request(app)
-            .delete('/exercises/delete/Thingimajigs')
+            .delete('/exercises/delete/Thingies')
             .expect(200);
 
         expect(res.body.message).to.equal('Exercise deleted successfully');
+        expect(res.body.length).to.equal(1);
     });
+
+
 });
 
 describe('Workout API Endpoint Tests', () => {
