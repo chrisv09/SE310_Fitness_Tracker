@@ -4,32 +4,35 @@ import ExerciseEditor from "./ExerciseEditor"
 import buttons from '../module_CSS/buttons.module.css'
 import styles from '../module_CSS/ExercisesDisplay.module.css'
 
-const ExercisesDisplay = () => {
+const ExercisesDisplay = ({ exercises: initialExercises }) => {
 
     const [completedSets, setCompletedSets] = useState([])
 
     const [exerciseList, setExerciseList] = useState({})
+
+    // initialExercises when user clicks add to today's workout in the routines
+    const [exercises, setExercises] = useState(initialExercises);
     
-    const [exercises, setExercises] = useState([
-        {
-            id: 0,
-            name: "Lat Raise",
-            weight: 20,
-            reps: 10,
-            setsGoal: 4,
-            setsLogged: 2,
-            editMode: false
-        },
-        {
-            id: 1,
-            name: "Squat",
-            weight: 50,
-            reps: 10,
-            setsGoal: 5,
-            setsLogged: 0,
-            editMode: false
-        }
-    ])
+    // const [exercises, setExercises] = useState([
+    //     {
+    //         id: 0,
+    //         name: "Lat Raise",
+    //         weight: 20,
+    //         reps: 10,
+    //         setsGoal: 4,
+    //         setsLogged: 2,
+    //         editMode: false
+    //     },
+    //     {
+    //         id: 1,
+    //         name: "Squat",
+    //         weight: 50,
+    //         reps: 10,
+    //         setsGoal: 5,
+    //         setsLogged: 0,
+    //         editMode: false
+    //     }
+    // ])
 
     const [isEditing, setIsEditing] = useState(false)
 
