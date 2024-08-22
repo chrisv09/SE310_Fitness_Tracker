@@ -147,8 +147,6 @@ describe('Exercise API Endpoint Tests', () => {
             scores[exercise.muscle_group] += exercise.score;
         }
 
-        console.log(scores);
-
     });
 
     describe('Workout API Endpoint Tests', () => {
